@@ -1,0 +1,60 @@
+version: '3'
+
+services:
+  mongo:
+    image: mongo
+    container_name: mongo
+    restart: unless-stopped
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_DATABASE: my-app
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - backend
+
+  backend:
+    hostname: backend
+    container_name: backend
+    build:
+      context: ./backend
+      dockerfile: ./Dockerfile
+    command: sh -c "npm run start"
+    environment:
+      - MONGO_HOSTNAME=mongo
+    ports:
+      - "5000:5000"
+    networks:
+      - frontend
+      - backend
+    depends_on:
+     - mongo
+    volumes:
+      - ./backend:/srv:cached
+
+  frontend:
+    hostname: frontend
+    container_name: frontend
+    command: sh -c "npm run start"
+    build:
+      context: ./frontend
+      dockerfile: ./Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend/src:/srv/src:cached
+      - ./frontend/node_modules/
+    depends_on:
+      - backend
+    networks:
+      - frontend
+
+networks:
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge
+
+volumes:
+  mongo_data:
