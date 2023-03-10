@@ -1,12 +1,6 @@
 import { useFormContext, Controller } from 'react-hook-form';
-import { TextField, TextFieldProps } from '@mui/material';
-import { styled } from '@mui/material/styles';
-
-const CssTextField = styled(TextField)({
-    '& label.Mui-focused': {
-        fontWeight: 500,
-    },
-});
+import { TextFieldProps } from '@mui/material';
+import { CssTextField } from './styled';
 
 type FormInputProps = {
     name: string;

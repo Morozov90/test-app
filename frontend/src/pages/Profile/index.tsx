@@ -9,8 +9,8 @@ const Profile = () => {
     const navigate = useNavigate();
 
     const { data, isLoading } = useQuery(["getMe"], getMeFn, {
-        select(data) {
-            return data.data;
+        select({ data }) {
+            return data;
         },
         onError() {
             localStorage.removeItem('token');
@@ -43,14 +43,14 @@ const Profile = () => {
                         <Grid
                             container
                             sx={{
-                                boxShadow: { sm: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px' },
+                                boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',
                                 padding: '6rem',
                             }}
                         >
                             <Typography variant="h3" >
                                Welcome  {data.firstName} {data.lastName}
                             </Typography>
-                            <Typography sx={{ textAlign: 'center', width: '100%', mt: '1rem' }} variant="h4">
+                            <Typography sx={{ textAlign: 'center', width: '100%', marginTop: '1rem' }} variant="h4">
                                 email:  {data.email}
                             </Typography>
                         </Grid>

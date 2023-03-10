@@ -3,11 +3,10 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
 import { object, string, InferType, ref } from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { FormInput } from '../../components';
-import { LinkItem } from '../Login';
+import { FormInput, LinkItem } from '../../components';
 import { useMutation } from "react-query";
 import { signUpUserFn } from "../../api/authApi";
-import { ILoginResponse } from "../../api/types";
+import { IErrorBase, ILoginResponse } from "../../api/types";
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 
@@ -28,6 +27,7 @@ export type ISignUp = InferType<typeof signupSchema>;
 
 const SignupPage = () => {
     const navigate = useNavigate();
+
     const defaultValues: ISignUp = {
         firstName: '',
         lastName: '',
@@ -39,13 +39,13 @@ const SignupPage = () => {
     const {
         mutate: registerUser,
         isLoading,
-    } = useMutation<ILoginResponse, unknown, ISignUp>((userData) => signUpUserFn(userData), {
+    } = useMutation<ILoginResponse, IErrorBase, ISignUp>((userData) => signUpUserFn(userData), {
         onSuccess(data) {
             localStorage.setItem('token', data.token);
             navigate('/');
         },
-        onError(error: unknown) {
-            toast.error((error as any).response.data.message, {
+        onError({ response }) {
+            toast.error(response?.data.message, {
                 position: "top-right",
             });
         },

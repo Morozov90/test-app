@@ -1,3 +1,5 @@
+import { AxiosError } from 'axios';
+
 export interface IUser {
     firstName: string;
     lastName: string;
@@ -14,3 +16,5 @@ export interface ILoginResponse {
 export interface IUserResponse {
     data: IUser
 }
+
+export interface IErrorBase extends AxiosError<{ message: string }> {}

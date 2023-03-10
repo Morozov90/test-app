@@ -7,25 +7,16 @@ import {
 } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { object, string, InferType } from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FormInput } from '../../components';
-import styled from '@emotion/styled';
 import { useMutation } from "react-query";
 import { loginUserFn } from "../../api/authApi";
-import { ILoginResponse } from "../../api/types";
+import { IErrorBase, ILoginResponse } from "../../api/types";
 import { toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
-
-export const LinkItem = styled(Link)`
-  text-decoration: none;
-  color: #3683dc;
-  &:hover {
-    text-decoration: underline;
-    color: #5ea1b6;
-  }
-`;
+import { LinkItem } from "../../components/styled"
 
 const loginSchema = object({
     email: string().min(1, 'Email is required').email('Email is invalid'),
@@ -49,25 +40,17 @@ const LoginPage = () => {
         defaultValues,
     });
 
-    const { mutate: loginUser, isLoading } = useMutation<ILoginResponse, any, ILogin>(
+    const { mutate: loginUser, isLoading } = useMutation<ILoginResponse, IErrorBase, ILogin>(
         (userData: ILogin) => loginUserFn(userData),
         {
             onSuccess: (data) => {
                 localStorage.setItem('token', data.token);
                 navigate('/');
             },
-            onError: (error: unknown) => {
-                if (Array.isArray((error as any).response.data.error)) {
-                    (error as any).response.data.error.forEach((el: any) => {
-                        toast.error(el.message, {
-                            position: "top-right",
-                        })
-                    });
-                } else {
-                    toast.error((error as any).response.data.message, {
-                        position: "top-right",
-                    });
-                }
+            onError: ({ response}) => {
+                toast.error(response?.data.message, {
+                    position: "top-right",
+                });
             },
         }
     );
@@ -94,7 +77,7 @@ const LoginPage = () => {
                         <Grid
                             container
                             sx={{
-                                boxShadow: { sm: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px' },
+                                boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',
                                 padding: '6rem',
                             }}
                         >
