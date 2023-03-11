@@ -63,6 +63,7 @@ const SignupPage = () => {
 
     return (
         <Container
+            data-testid='signupPage'
             maxWidth={false}
             sx={{ height: '100vh', backgroundColor: '#F4F4C8' }}
         >
@@ -114,6 +115,7 @@ const SignupPage = () => {
                                         component='form'
                                         noValidate
                                         autoComplete='off'
+                                        data-testid='signupForm'
                                         onSubmit={methods.handleSubmit(onSubmitHandler)}
                                     >
                                         <Typography
@@ -130,6 +132,7 @@ const SignupPage = () => {
                                             name='firstName'
                                             focused
                                             required
+                                            data-testid='firstName'
                                         />
                                         <FormInput
                                             label='Last Name'
@@ -137,6 +140,7 @@ const SignupPage = () => {
                                             name='lastName'
                                             focused
                                             required
+                                            data-testid='lastName'
                                         />
                                         <FormInput
                                             label='Enter your email'
@@ -144,6 +148,7 @@ const SignupPage = () => {
                                             name='email'
                                             focused
                                             required
+                                            data-testid='email'
                                         />
                                         <FormInput
                                             type='password'
@@ -151,6 +156,7 @@ const SignupPage = () => {
                                             name='password'
                                             required
                                             focused
+                                            data-testid='password'
                                         />
                                         <FormInput
                                             type='password'
@@ -158,11 +164,13 @@ const SignupPage = () => {
                                             name='passwordConfirm'
                                             required
                                             focused
+                                            data-testid='passwordConfirm'
                                         />
 
                                         <LoadingButton
                                             loading={isLoading}
                                             type='submit'
+                                            data-testid='submitButton'
                                             variant='contained'
                                             sx={{
                                                 padding: '0.8rem',
@@ -179,7 +187,7 @@ const SignupPage = () => {
                             <Grid container justifyContent='center'>
                                 <Stack sx={{ marginTop: '3rem', textAlign: 'center' }}>
                                     <Typography sx={{ fontSize: '0.9rem', marginBottom: '1rem' }}>
-                                        Already have an account? <LinkItem to='/'>Login</LinkItem>
+                                        Already have an account? <LinkItem data-testid='loginLink' to='/'>Login</LinkItem>
                                     </Typography>
                                 </Stack>
                             </Grid>

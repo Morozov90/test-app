@@ -5,7 +5,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import { useNavigate } from "react-router-dom";
 
-const Profile = () => {
+const ProfilePage = () => {
     const navigate = useNavigate();
 
     const { data, isLoading } = useQuery(["getMe"], getMeFn, {
@@ -27,6 +27,7 @@ const Profile = () => {
 
     return (
         <Container
+            data-testid='profilePage'
             maxWidth={false}
             sx={{ height: '100vh', textAlign: 'center', backgroundColor: '#F4F4C8' }}
         >
@@ -47,10 +48,10 @@ const Profile = () => {
                                 padding: '6rem',
                             }}
                         >
-                            <Typography variant="h3" >
+                            <Typography variant="h3" data-testid='nameInfo' >
                                Welcome  {data.firstName} {data.lastName}
                             </Typography>
-                            <Typography sx={{ textAlign: 'center', width: '100%', marginTop: '1rem' }} variant="h4">
+                            <Typography data-testid='emailInfo' sx={{ textAlign: 'center', width: '100%', marginTop: '1rem' }} variant="h4">
                                 email:  {data.email}
                             </Typography>
                         </Grid>
@@ -60,4 +61,4 @@ const Profile = () => {
     );
 };
 
-export default Profile;
+export default ProfilePage;

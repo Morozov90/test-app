@@ -60,6 +60,7 @@ const LoginPage = () => {
 
     return (
         <Container
+            data-testid='loginPage'
             maxWidth={false}
             sx={{ height: '100vh', backgroundColor: '#F4F4C8' }}
         >
@@ -116,6 +117,7 @@ const LoginPage = () => {
                                             name='email'
                                             focused
                                             required
+                                            data-testid='email'
                                         />
                                         <FormInput
                                             type='password'
@@ -123,12 +125,14 @@ const LoginPage = () => {
                                             name='password'
                                             required
                                             focused
+                                            data-testid='password'
                                         />
 
                                         <LoadingButton
                                             loading={isLoading}
                                             type='submit'
                                             variant='contained'
+                                            data-testid='submitButton'
                                             sx={{
                                                 padding: '0.8rem',
                                                 marginTop: 2,
@@ -145,7 +149,7 @@ const LoginPage = () => {
                                 <Stack sx={{ marginTop: '3rem', textAlign: 'center' }}>
                                     <Typography sx={{ fontSize: '0.9rem', marginBottom: '1rem' }}>
                                         Need an account?{' '}
-                                        <LinkItem to='/register'>Sign up here</LinkItem>
+                                        <LinkItem data-testid='registerLink' to='/register'>Sign up here</LinkItem>
                                     </Typography>
                                 </Stack>
                             </Grid>
