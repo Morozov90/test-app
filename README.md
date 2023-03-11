@@ -3,3 +3,5 @@
 ## To run this project
 
 `Step 1` : run `docker-compose up  `
+
+`Step 2` : Wait... Enjoy 😊
