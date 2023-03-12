@@ -3,7 +3,7 @@ import {
     QueryClient,
     QueryClientProvider,
 } from 'react-query'
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 import ProfilePage from "./pages/Profile";
 import LoginPage from "./pages/Login";
@@ -20,6 +20,7 @@ function App() {
               <Route path="/" element={<RequireAuth><ProfilePage /></RequireAuth>} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<Signup />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
           <ToastContainer/>
       </QueryClientProvider>

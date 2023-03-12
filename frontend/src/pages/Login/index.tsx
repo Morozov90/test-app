@@ -16,7 +16,8 @@ import { loginUserFn } from "../../api/authApi";
 import { IErrorBase, ILoginResponse } from "../../api/types";
 import { toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
-import { LinkItem } from "../../components/styled"
+import { LinkItem } from "../../components"
+import { useRedirectAuthenticatedUser } from "../../hooks/useRedirectAuthenticatedUser";
 
 const loginSchema = object({
     email: string().min(1, 'Email is required').email('Email is invalid'),
@@ -30,6 +31,7 @@ export type ILogin = InferType<typeof loginSchema>;
 
 const LoginPage = () => {
     const navigate = useNavigate();
+    useRedirectAuthenticatedUser();
     const defaultValues: ILogin = {
         email: '',
         password: '',

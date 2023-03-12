@@ -9,6 +9,7 @@ import { signUpUserFn } from "../../api/authApi";
 import { IErrorBase, ILoginResponse } from "../../api/types";
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
+import { useRedirectAuthenticatedUser } from "../../hooks/useRedirectAuthenticatedUser";
 
 const signupSchema = object({
     firstName: string().min(1, 'First name is required').max(70),
@@ -27,6 +28,7 @@ export type ISignUp = InferType<typeof signupSchema>;
 
 const SignupPage = () => {
     const navigate = useNavigate();
+    useRedirectAuthenticatedUser();
 
     const defaultValues: ISignUp = {
         firstName: '',
@@ -187,7 +189,7 @@ const SignupPage = () => {
                             <Grid container justifyContent='center'>
                                 <Stack sx={{ marginTop: '3rem', textAlign: 'center' }}>
                                     <Typography sx={{ fontSize: '0.9rem', marginBottom: '1rem' }}>
-                                        Already have an account? <LinkItem data-testid='loginLink' to='/'>Login</LinkItem>
+                                        Already have an account? <LinkItem data-testid='loginLink' to='/login'>Login</LinkItem>
                                     </Typography>
                                 </Stack>
                             </Grid>

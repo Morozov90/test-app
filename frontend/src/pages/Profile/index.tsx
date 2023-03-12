@@ -1,4 +1,4 @@
-import { Container, Grid, Typography } from '@mui/material';
+import {Button, Container, Grid, Typography} from '@mui/material';
 import { getMeFn } from "../../api/authApi";
 import { useQuery } from "react-query";
 import CircularProgress from '@mui/material/CircularProgress';
@@ -8,15 +8,21 @@ import { useNavigate } from "react-router-dom";
 const ProfilePage = () => {
     const navigate = useNavigate();
 
+    const handleLogout = () => {
+        localStorage.removeItem('token')
+        navigate('/login');
+    }
+
     const { data, isLoading } = useQuery(["getMe"], getMeFn, {
         select({ data }) {
             return data;
         },
         onError() {
-            localStorage.removeItem('token');
-            navigate('/login');
+            handleLogout()
         },
     });
+
+
 
     if(isLoading || !data) {
         return <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
@@ -54,6 +60,7 @@ const ProfilePage = () => {
                             <Typography data-testid='emailInfo' sx={{ textAlign: 'center', width: '100%', marginTop: '1rem' }} variant="h4">
                                 email:  {data.email}
                             </Typography>
+                            <Button sx={{ margin: '2rem auto', padding: '0.8rem', }} variant="contained" onClick={handleLogout}>logout</Button>
                         </Grid>
                 </Grid>
             </Grid>
