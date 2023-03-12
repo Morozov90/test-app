@@ -3,7 +3,7 @@ import { ILogin } from '../pages/Login';
 import { ISignUp } from '../pages/Signup';
 import { ILoginResponse, IUserResponse } from './types';
 
-const BASE_URL = 'http://localhost:5000/api/';
+const BASE_URL = 'http://localhost:3030/api/';
 
 export const authApi = axios.create({
     baseURL: BASE_URL,

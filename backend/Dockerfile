@@ -1,13 +1,17 @@
 FROM node:16-alpine
 
-WORKDIR /src
+WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm install
+RUN npm install --only=production
+
+RUN npm install -g @nestjs/cli
 
 COPY . .
 
-EXPOSE 5000
+RUN npm run build
 
+EXPOSE 3030
 
+CMD ["npm", "run", "start:prod"]

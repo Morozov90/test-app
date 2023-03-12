@@ -1,14 +1,17 @@
 FROM node:16-alpine
 
-RUN mkdir -p /srv
-
-WORKDIR /srv
+WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm install --production
 COPY . .
+
+RUN npm install
+
+RUN npm run build
+
+RUN npm install -g serve
 
 EXPOSE 3000
 
-CMD "npm" "run" "dev"
+CMD ["serve", "-s", "build", "-l", "3000"]
